@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.refeng.mapper.LotteryUserMapper">
+
+
+
+	<!-- <select id="lotteryUserList" resultType="com.refeng.model.LotteryUser" 
+		parameterType="com.refeng.pojo.Query" > select * from ( select rownum rm 
+		,t.* from ( select u.USER_ID as userId, u.RECOMMENDER as recommender, u.CREATE_TIMESTAMP 
+		as createTime, u.USER_NAME as userName, u.PHONE as phone, u.PERSONAL_ID as 
+		identity , ext.LAST_LOGIN_TIME as lastTime, ext.LAST_PRODUCT_ID as client 
+		,bank.ACCOUNT_NO as accountNo ,acts.BALANCE as balabce , (SELECT SUM(PAY_MONEY) 
+		as payMoney FROM act.TB_OSS_PAY_ORDER WHERE USER_ID=u.USER_ID) payMoney from 
+		act.TB_USER_INFO u LEFT JOIN act.TB_USER_EXT ext ON u.USER_ID=ext.USER_ID 
+		LEFT JOIN act.TB_CARD_WITHDRAW bank ON u.USER_ID=bank.USER_ID LEFT JOIN act.TB_USER_ACT 
+		acts ON u.USER_ID=acts.USER_ID WHERE 1=1 <if test="phone != null and phone 
+		!= ''" > AND u.PHONE = #{phone} </if> <if test="name != null and name != 
+		''" > AND u.USER_NAME like '%${name}%' </if> <if test="startTime != null 
+		" > AND u.CREATE_TIMESTAMP > #{startTime} </if> <if test="endTime != null" 
+		> AND #{endTime} >u.CREATE_TIMESTAMP </if> ) t ) where rm>((#{pageNum}-1)*#{size}) 
+		and (#{pageNum}*#{size})>rm </select> -->
+
+	<!-- 总条数 -->
+	<select id="lotterycount" resultType="integer" parameterType="com.refeng.pojo.Query">
+		select count(1)
+		from act.TB_USER_INFO u WHERE 1=1
+		<if test=" mode != null ">
+			<if test="name != null and name != '' and mode ==1 and retrieval==  0 ">
+				AND u.USER_NAME like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==1 and retrieval== 1 ">
+				AND u.USER_NAME =#{name}
+			</if>
+
+			<if test="name != null and name != '' and mode ==2 and retrieval== 0 ">
+				AND u.REAL_NAME like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==2 and retrieval== 1 ">
+				AND u.REAL_NAME =#{name}
+			</if>
+			<if test="name != null and name != '' and mode ==3 and retrieval== 0 ">
+				AND u.PHONE like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==3 and retrieval==1 ">
+				AND u.PHONE =#{name}
+			</if>
+			<if test="name != null and name != '' and mode ==4 and retrieval== 0 ">
+				AND u.PERSONAL_ID like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==4 and retrieval== 1 ">
+				AND u.PERSONAL_ID =#{name}
+			</if>
+		</if>
+		<if test="startTime != null ">
+			AND u.CREATE_TIMESTAMP > #{startTime}
+		</if>
+		<if test="endTime != null">
+			AND #{endTime} >u.CREATE_TIMESTAMP
+		</if>
+
+		<if test="type != null ">
+			AND u.USER_TYPE =#{type}
+		</if>
+		<if test="state != null  ">
+			AND u.USER_STATUS =#{state}
+		</if>
+	</select>
+	<select id="lotteryUserList" resultType="com.refeng.model.LotteryUser"
+		parameterType="com.refeng.pojo.Query">
+		select * from (
+		select rownum rm ,t.*
+		from (
+		select u.USER_ID as userId, u.RECOMMENDER as recommender, u.CREATE_TIMESTAMP
+		as createTime,
+		u.USER_NAME as userName ,(select SUM (BALANCE)FROM act.TB_USER_ACT WHERE
+		USER_ID=u.USER_ID ) as balabce, u.REAL_NAME as realName
+		,u.USER_TYPE as userType , u.USER_STATUS as userStatus
+		from act.TB_USER_INFO u WHERE 1=1
+		<if test=" mode != null ">
+			<if test="name != null and name != '' and mode ==1 and retrieval == 0 ">
+				AND u.USER_NAME like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==1 and retrieval== 1 ">
+				AND u.USER_NAME =#{name}
+			</if>
+
+			<if test="name != null and name != '' and mode ==2 and retrieval== 0 ">
+				AND u.REAL_NAME like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==2 and retrieval== 1 ">
+				AND u.REAL_NAME =#{name}
+			</if>
+			<if test="name != null and name != '' and mode ==3 and retrieval== 0 ">
+				AND u.PHONE like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==3 and retrieval== 1 ">
+				AND u.PHONE =#{name}
+			</if>
+			<if test="name != null and name != '' and mode ==4 and retrieval== 0 ">
+				AND u.PERSONAL_ID like '%${name}%'
+			</if>
+			<if test="name != null and name != '' and mode ==4 and retrieval== 1 ">
+				AND u.PERSONAL_ID =#{name}
+			</if>
+
+		</if>
+
+		<if test="startTime != null ">
+			AND u.CREATE_TIMESTAMP > #{startTime}
+		</if>
+		<if test="endTime != null">
+			AND #{endTime} >u.CREATE_TIMESTAMP
+		</if>
+
+		<if test="type != null ">
+			AND u.USER_TYPE =#{type}
+		</if>
+		<if test="state != null  ">
+			AND u.USER_STATUS =#{state}
+		</if>
+		) t
+		) where rm>((#{pageNum}-1)*#{size}) and (#{pageNum}*#{size})>rm
+	</select>
+
+	<select id="byUserId" resultType="com.refeng.model.LotteryInformation"
+		parameterType="java.lang.Integer">
+		select INFO.USER_ID as userId ,INFO.USER_NAME as userName,INFO.USER_NAME as
+		userName ,INFO.USER_TYPE as userType ,INFO.REAL_NAME as realName
+		,INFO.PERSONAL_ID as personalId ,INFO.USER_STATUS as userStatus
+		,INFO.CREATE_TIMESTAMP as createTime,EXT.LAST_LOGIN_TIME as lastTime
+		,INFO.PHONE as phone
+		from act.TB_USER_EXT EXT , act.TB_USER_INFO INFO WHERE INFO.USER_ID=#{id}
+		AND EXT.USER_ID=#{id}
+	</select>
+
+</mapper>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<nav class="navbar-default navbar-static-side" role="navigation"
+		th:fragment="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav metismenu" id="side-menu">
+				<li class="nav-header">
+					<div class="dropdown profile-element">
+						<span> <img alt="image" height="100" width="100"
+							class="img-circle" th:src="@{/img/lly/timg.jpg}" />
+						</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
+							class="clear"> <span class="block m-t-xs"> <strong
+									class="font-bold"> 上次登入时间：
+										<p
+											th:text="${#dates.format(session.uesr.loginTime,'yyyy-MM-dd HH:mm:ss')}"></p>
+								</strong>
+							</span>
+						</span>
+						</a>
+					</div>
+					<div class="logo-element">OPER</div>
+				</li>
+				<li><a th:href="@{/admin/indexs}"><i class="fa fa-diamond"></i>
+						<span class="nav-label">首页</span></a></li>
+
+
+				<li th:each="collect,iterStat :${session.menuList}"><a href="#"><i
+						class="fa fa-desktop"></i> <span class="nav-label"><i
+							class="fa" th:text="${collect.menuName}"></i></span><span
+						class="fa arrow"></span></a>
+					<ul th:class="${collect.menuUrlList} != null"
+						class="nav nav-second-level collapse">
+
+						<li th:each="sonlist,iterStat : ${collect.menuUrlList}"><a
+							th:href="@{${sonlist.menuUrl}}"><i class="fa fa-bell "
+								th:text="${sonlist.menuName}"></i></a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+</body>
+</html>
+
+
+
