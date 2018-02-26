@@ -15,6 +15,7 @@ package com.refeng.controller;
         import com.refeng.model.Recharge;
         import com.refeng.pojo.Query;
         import com.refeng.service.FinanceService;
+        import com.refeng.util.QueryUtil;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
@@ -42,7 +43,7 @@ public class FinanceController {
      */
     @RequestMapping("/admin/finance/list")
     public String roleList(@Valid Query query, Model model, HttpServletRequest request)   {
-        query= query(query);
+        query= QueryUtil.query(query);
 
 
         List<Recharge>  rechargeList =financeService.fList(query);
@@ -104,52 +105,6 @@ public class FinanceController {
 
 
 
-    /**
-     * query 的初始化
-     *
-     * @return
-     */
-    public Query query(Query query) {
-        if(query.getPageNum()==null) {
-            query.setPageNum(1);
-        }
-        if(query.getSize()==null) {
-            query.setSize(10);
-        }
-        if(query.getRetrieval()==null) {
-            query.setRetrieval(0);
-        }
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        if(query.getStartTime1()!=null) {
-            Date date;
-            try {
-                if(!query.getStartTime1().isEmpty()) {
-                    date = format.parse(query.getStartTime1());
-                    query.setStartTime(date);
-                }
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
-        if(query.getEndTime1()!=null ) {
-            Date date;
-            try {
-                if(!query.getEndTime1().isEmpty()) {
-                    date = format.parse(query.getEndTime1());
-                    query.setEndTime(date);
-                }
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
-        return query;
-
-    }
 
 
 }

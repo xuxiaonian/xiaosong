@@ -54,7 +54,16 @@
 		) t
 		) where rm>((#{pageNum}-1)*#{size}) and (#{pageNum}*#{size})>rm
 	</select>
+      <!--根据订单ID来查询-->
+	<select id="WithdrawalsId" resultType="com.refeng.model.Withdrawals"
+			parameterType="string">
 
-
+		select a.USER_ID AS userId, a.ORDER_ID AS orderId, a.ACCOUNT_NO AS
+		accountNo,a.BANK_NAME AS bankName, a.BRANCH AS branch,a.ORDER_AMOUNT AS orderAmout,a.FEE_AMOUNT AS
+		feeAmout,a.CREATE_TIMESTAMP AS createTimestamp, a.ORDER_STATUS AS orderStatus,
+		fo.USER_NAME as nickname,fo.REAL_NAME AS realName
+		from TB_ORDER_WITHDRAW a LEFT JOIN TB_USER_INFO fo ON
+		a.USER_ID=fo.user_id WHERE a.ORDER_ID=#{id}
+	</select>
 
 </mapper>

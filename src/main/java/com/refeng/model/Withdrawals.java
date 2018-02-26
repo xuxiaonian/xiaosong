@@ -14,6 +14,10 @@ public class Withdrawals {
     private String nickname;
     // 真实姓名
     private String realName;
+    // 开户行 BANK_NAME
+    private String  bankName;
+    // 支行 BRANCH
+    private String  branch;
     // 我要付账号 ACCOUNT_NO
     private String  accountNo;
     // 提现的金额 ORDER_AMOUNT
@@ -124,5 +128,21 @@ public class Withdrawals {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }
