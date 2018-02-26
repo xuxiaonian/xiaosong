@@ -1,8 +1,9 @@
 package com.refeng.service;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+
+import com.refeng.config.DatabaseContextHolder;
+import com.refeng.config.DatabaseType;
 import com.refeng.mapper.CarouselPicMapper;
 import com.refeng.model.CarouselPic;
 import org.slf4j.Logger;
@@ -11,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +27,11 @@ public class CarouselPicService  {
      * @return
      */
     public List<CarouselPic> picList(){
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
         List<CarouselPic> picList=carouselPicMapper.picList();
         return picList;
     }
+
           //userAdd
         public Integer newsAdd(CarouselPic pic) {
             // TODO Auto-generated method stub

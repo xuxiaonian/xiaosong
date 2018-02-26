@@ -69,6 +69,7 @@
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jdbc:8.5.11" />
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:8.5.11" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.6" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:1.5.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring4:2.1.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:2.1.5.RELEASE" />
