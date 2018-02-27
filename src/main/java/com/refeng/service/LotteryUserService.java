@@ -1,20 +1,19 @@
 package com.refeng.service;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.refeng.config.DatabaseContextHolder;
 import com.refeng.config.DatabaseType;
-import com.refeng.model.Betting;
+import com.refeng.mapper.FinanceMapper;
+import com.refeng.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import com.refeng.mapper.LotteryUserMapper;
-import com.refeng.model.Account;
-import com.refeng.model.LotteryInformation;
-import com.refeng.model.LotteryUser;
 import com.refeng.pojo.Query;
 import com.refeng.util.StringTools;
 
@@ -24,6 +23,7 @@ import com.refeng.util.StringTools;
 public class LotteryUserService  {
     @Autowired
     private LotteryUserMapper lotteryUserMapper;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * 查询用户列表信息;
@@ -164,5 +164,74 @@ public class LotteryUserService  {
 	 */
 	public List<Betting>  bettingId(Integer userId) {
 		return lotteryUserMapper.bettingList(userId);
+	}
+
+	/**
+	 * 查询用户基本信息;
+	 * @return
+	 */
+	public LotteryInformation money(Integer userId) {
+		return lotteryUserMapper.byUserId(userId);
+	}
+	/**
+	 * 查询用户基本信息;
+	 * @return
+	 */
+	public Integer updateMoney(String suserId,String type,String account, String mold,String reason,String money) {
+		Integer state=0;
+		Integer	accoun=0;
+		Float fee=Float.parseFloat("0.00");
+		Float moneys=Float.parseFloat(money);
+		Integer user=	Integer.parseInt(suserId);
+		Recharce recharce=new Recharce();
+		java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyyMMdd ");
+		String date = formatter.format(new Date());//格式化数据
+		recharce.setOrderId(date);
+		recharce.setAmout(moneys);
+		recharce.setUserId(user);
+		recharce.setPaytype(Integer.parseInt(type));
+		recharce.setFee(fee);
+		recharce.setReal(moneys);
+		recharce.setStatus(2);
+		recharce.setFlag(1);
+		recharce.setCreate(new Date());
+		recharce.setTransact(new Date());
+		recharce.setDesc(mold);
+		recharce.setRemark(reason);
+		lotteryUserMapper.initRecharce(recharce);
+		if (type.equals("0")){
+//减款
+			if (account.equals("0")){
+//				现金账户 0  奖金账户 1  红包账户 2
+//				ACT_TYPE 账户类型（1000-奖金账户 2000-投注账户 3000-赠款账户
+				accoun=2000;
+				lotteryUserMapper.reduce(accoun,user,moneys);
+
+
+			}else if (account.equals("1")){
+				accoun=1000;
+				lotteryUserMapper.reduce(accoun,Integer.parseInt(suserId),moneys);
+			}else if (account.equals("2")){
+				accoun=3000;
+				lotteryUserMapper.reduce(accoun,Integer.parseInt(suserId),moneys);
+			}
+		}else{
+			if (account.equals("0")){
+//				现金账户 0  奖金账户 1  红包账户 2
+//				ACT_TYPE 账户类型（1000-奖金账户 2000-投注账户 3000-赠款账户
+				accoun=2000;
+				lotteryUserMapper.add(accoun,user,moneys);
+
+
+			}else if (account.equals("1")){
+				accoun=1000;
+				lotteryUserMapper.add(accoun,Integer.parseInt(suserId),moneys);
+			}else if (account.equals("2")){
+				accoun=3000;
+				lotteryUserMapper.add(accoun,Integer.parseInt(suserId),moneys);
+			}
+		}
+
+		return state;
 	}
 }

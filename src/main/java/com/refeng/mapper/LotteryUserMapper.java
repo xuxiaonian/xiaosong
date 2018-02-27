@@ -3,15 +3,9 @@ package com.refeng.mapper;
 import java.util.Date;
 import java.util.List;
 
-import com.refeng.model.Betting;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.refeng.model.*;
+import org.apache.ibatis.annotations.*;
 
-import com.refeng.model.Account;
-import com.refeng.model.LotteryInformation;
-import com.refeng.model.LotteryUser;
 import com.refeng.pojo.Query;
 
 
@@ -105,5 +99,20 @@ public interface LotteryUserMapper {
 	"LEFT JOIN gpc.TB_ORDER_ISSUE b ON a.ORDER_ID=b.ORDER_ID " +
 	"LEFT JOIN gpc.TB_PROGRAM_INFO c ON c.PROGRAM_ID=a.PROGRAM_ID Where a.USER_ID=#{userId}")
 	List <Betting> bettingList(Integer userId);
-	  
+
+
+
+	//加减款
+
+	@Update(" update act.TB_USER_ACT  set BALANCE=(BALANCE-#{money}) where USER_ID =#{userId} and ACT_TYPE =#{accoun}")
+	Integer reduce(@Param("accoun")Integer accoun,@Param("userId")Integer userId,@Param("money")Float money);
+
+	@Update(" update act.TB_USER_ACT  set BALANCE=(#{money}+BALANCE) where USER_ID =#{userId} and ACT_TYPE =#{accoun}")
+	Integer add(@Param("accoun")Integer accoun,@Param("userId")Integer userId,@Param("money")Float money);
+
+	//	chongzhi的新增
+	@Insert("INSERT INTO act.TB_ORDER_RECHARGE (ORDER_ID , USER_ID ,PAY_TYPE, ORDER_AMOUNT,FEE_AMOUNT,REAL_AMOUNT,ORDER_STATUS ," +
+			" OVER_FLAG,CREATE_TIMESTAMP,TRANSACT_TIMESTAMP,ORDER_DESC,REMARK ) " +
+			" VALUES ((#{orderId} || act.seq_id.nextval) ,#{userId},#{paytype},#{amout},#{fee},#{real},#{status},#{flag},#{create},#{transact},#{desc},#{remark}) ")
+	Integer initRecharce (Recharce pic);
 }

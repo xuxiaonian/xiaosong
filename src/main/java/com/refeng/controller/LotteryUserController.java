@@ -2,9 +2,6 @@ package com.refeng.controller;
 
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -18,19 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.refeng.pojo.MenuUrlList;
 import com.refeng.pojo.Query;
 import com.refeng.service.LotteryUserService;
-import com.refeng.service.UserService;
 
 @Controller
 public class LotteryUserController {
 
 
-	@Autowired
-	private UserService userService;
+
 	@Autowired
 	private LotteryUserService lotteryUserService;
 
@@ -151,12 +145,41 @@ public String lotteryUserList(@Valid Query query , Model model,HttpServletReques
 		model.addAttribute("query",query);
 		return "lottery/bettingList";
 	}
-	
-	
-	
-	
-	
-	
+
+
+	/**
+	 * 加减款
+	 * @param model
+
+	 * @return
+	 */
+	@GetMapping("/admin/lotteryUser/money")
+	public String money(Model model,Integer userId, HttpServletRequest request) {
+
+		LotteryInformation  byUserId =lotteryUserService.money(userId);
+		model.addAttribute("lottery",byUserId);
+		return "lottery/money";
+	}
+
+	/**
+	 * 加减款
+	 * @param model
+
+	 * @return
+	 */
+	@PostMapping("/admin/lotteryUser/updateMoney")
+	public void updateMoney(Model model,String suserId,String type,String account, String mold,String reason,String money, HttpServletResponse response) {
+
+		Integer  byUserId =lotteryUserService.updateMoney(suserId,type,account,  mold, reason, money);
+		model.addAttribute("lottery",byUserId);
+		try {
+			response.sendRedirect("/admin/lotteryUser/list");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 	
 	

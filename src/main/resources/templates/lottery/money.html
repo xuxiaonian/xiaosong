@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>OPER</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+
+<!-- Toastr style -->
+<link th:href="@{/css/plugins/toastr/toastr.min.css}" rel="stylesheet" />
+
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<!-- summernote style -->
+<link th:href="@{/css/plugins/summernote/summernote.css}"
+	rel="stylesheet" />
+<link th:href="@{/css/plugins/summernote/summernote-bs3.css}"
+	rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation"
+			th:include="nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="border-bottom" th:include="header :: headerTop"></div>
+			<div class="row wrapper border-bottom white-bg page-heading"
+				th:fragment="headerNav">
+				<div class="col-lg-10">
+					<h2>用户管理</h2>
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<li><a>内容管理</a></li>
+
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+			<div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>用户基本信息</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content">
+
+								<form id="formTag" action="/admin/lotteryUser/updateMoney"
+									method="POST" class="form-horizontal"
+									enctype="multipart/form-data">
+									<input type="hidden" name="suserId"
+										th:value="${lottery.userId}" class="form-control" /> <input
+										type="hidden" name="password" value="" />
+
+
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label">用户昵称：</label>
+										<div class="col-sm-10">
+											<p th:text="${lottery.userName} "></p>
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label">用户类型：</label>
+										<div class="col-sm-10">
+											<p th:text="${lottery.userType} "></p>
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">真实姓名：</label>
+										<div class="col-sm-10">
+											<p th:text="${lottery.realName} "></p>
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label">手机号：</label>
+										<div class="col-sm-10">
+											<p th:text="${lottery.phone} "></p>
+										</div>
+									</div>
+									<div class="form-group"  >
+										<label class="col-sm-2 control-label">选择加减款：</label>
+										<div class="col-sm-10">
+
+											加款<input  type="radio" name="type" value="1" />
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;减款
+											<input  type="radio" name="type" value="0" />
+										</div>
+
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group"  >
+										<label class="col-sm-2 control-label">选择账户：</label>
+										<div class="col-sm-10">
+
+											现金账户<input  type="radio" name="account" value="0" />
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;奖金账户
+											<input  type="radio" name="account" value="1" />
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;红包账户
+											<input  type="radio" name="account" value="2" />
+										</div>
+
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">金额：</label>
+										<div class="col-sm-4">
+											<input id="title" name="money" type="text"
+												   class="form-control" value="" />
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">加款类型（减款不用选择）：</label>
+										<div class="col-sm-4">
+											<select name="mold" id="mold" class="form-control">
+												<option value="0" >请选择</option>
+												<option value="0" >充值掉单加款</option>
+												<option value="0" >活动加款</option>
+												<option value="0" >出票失败奖励加款</option>
+												<option value="0" >投诉奖励加款</option>
+												<option value="0" >渠道充值加款</option>
+												<option value="0" >其他加款</option>
+											</select>
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group" >
+										<label class="col-sm-2 control-label">备注：</label>
+										<div class="col-sm-10">
+											<textarea  name="reason"
+													   class="form-control" rows="2"  value=""></textarea>
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+										<div class="col-sm-4 col-sm-offset-2">
+											<button id="submitButton" class="btn btn-primary"
+													type="submit">&nbsp;&nbsp;&nbsp;&nbsp;提&nbsp;&nbsp;&nbsp;&nbsp;交&nbsp;&nbsp;&nbsp;&nbsp;</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+
+
+				</div>
+
+			</div>
+			<div class="footer" th:include="footer :: copyright"></div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:src="@{/js/jquery-2.1.1.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+	<!-- Toastr script -->
+	<script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+
+	<!-- common -->
+	<script th:src="@{/js/common.js}"></script>
+
+	<!-- SUMMERNOTE -->
+	<script th:src="@{/js/plugins/summernote/summernote.min.js}"></script>
+
+	<script th:inline="javascript">
+    
+    function updatepassWord() {
+    	
+    	var pass2=$("#passWords").val();
+    	if(pass2.length>0){
+    		$("input[name='userId']").val($("#userId").val());
+    		$("input[name='password']").val($("#passWord").val())
+    		 document.forms['formTag'].submit();
+    	}else{
+    		alert("请重新打开弹窗输入密码！");
+   		 return false
+    	}
+    }
+    function check() {
+    	var pass1=$("#passWord").val();
+    	var pass2=$("#passWords").val();
+    	if(pass1==pass2){
+    		 return 
+    	}else{
+    		alert("两次输入的密码不一样请重新输入！");
+    		$("#passWords").val("");
+   		 return false
+    	}
+    }
+    </script>
+
+
+</body>
+
+</html>
