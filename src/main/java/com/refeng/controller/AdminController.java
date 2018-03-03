@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.refeng.util.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.refeng.model.User;
 import com.refeng.pojo.MenuUrlList;
 import com.refeng.service.UserService;
-import com.refeng.util.EdsUtil;
+
 
 
 
@@ -49,7 +50,8 @@ public class AdminController {
     	if(userList==null || userList.isEmpty()){
     		model.addAttribute("error", "用户名不存在，请重新登录！");
 			return "login";
-    	}else if(! EdsUtil.decryptBasedDes(userList.get(0).getPassword()).equals(admin.getPassword())){
+
+    	}else if(! userList.get(0).getPassword().equals(StringTools.MD5EncodeToHex(admin.getPassword()))){
     		model.addAttribute("error", "密码错误，请重新输入密码！");
 			return "login";
     	}else {

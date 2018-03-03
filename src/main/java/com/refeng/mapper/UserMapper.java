@@ -51,7 +51,7 @@ public interface UserMapper {
 			" WHERE role.id=#{id} ")
 	List<MenuUrl> menuUrlNmae(Integer id);
 //所有的父节点
-	@Select(" select id , MENU_NAME  as menuName FROM  F_MENU_URL where PARENT_ID=0 ")
+	@Select(" select id , MENU_NAME  as menuName FROM  F_MENU_URL where PARENT_ID=0 and STYLE=2 ")
 	List<MenuUrl> menuUrl();
 	//角色新增name  insert into TStudent(name, age) values(#{name}, #{age})
 	@Insert("INSERT INTO F_ROLE (ID,NAME,CREATION_TIME,STATE) " +

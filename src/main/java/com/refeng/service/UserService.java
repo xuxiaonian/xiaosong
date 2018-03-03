@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.refeng.util.StringTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import com.refeng.model.MenuUrl;
 import com.refeng.model.Role;
 import com.refeng.model.User;
 import com.refeng.pojo.MenuUrlList;
-import com.refeng.util.EdsUtil;
+
 
 
 
@@ -180,7 +181,8 @@ public class UserService {
  		// TODO Auto-generated method stub
  		Integer add=0;
  		if(user.getId()!=null) {
-			String pass=EdsUtil.encryptBasedDes(user.getPassword());
+			String pass= StringTools.MD5EncodeToHex(user.getPassword());
+
 			user.setPassword(pass);
 			add=userMapper.upodateUser(user);
  		}else {
@@ -188,7 +190,8 @@ public class UserService {
  			user.setLoginTime(new Date());
  			user.setEstablishTime(new Date());
  			user.setId(lisr.get(0).getId()+1);
- 			String pass=EdsUtil.encryptBasedDes(user.getPassword());
+			String pass= StringTools.MD5EncodeToHex(user.getPassword());
+
  			user.setPassword(pass);
  			 add=userMapper.newsUser(user);
  			

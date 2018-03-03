@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         addInterceptor.excludePathPatterns("/error");
         addInterceptor.excludePathPatterns("/admin/login**");
         addInterceptor.excludePathPatterns("/admin/index**");
-        addInterceptor.excludePathPatterns("/uploadFile**");
+        addInterceptor.excludePathPatterns("/uploadFile/**");
         
         // 拦截配置
         addInterceptor.addPathPatterns("/**");

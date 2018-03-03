@@ -135,15 +135,13 @@
 												<td th:text="${list.status}">Onions</td>
 												<td>
 													<!--\''+${prod.id}+'\'--> <!--javascript:Foundation('+${list.orderId}+')-->
-													<a th:if="${list.orderStatus} ==4 "
-													th:onclick="'javascript:Foundation(\''+${list.orderId}+'\');'"
-													th:href="@{#}">审核通过</a>
-                                                    <a th:if="${list.orderStatus} ==4 "
-                                                       th:onclick="'javascript:Foundation(\''+${list.orderId}+'\');'"
-                                                       th:href="@{#}">审核不通过</a>
+
+													<a th:if="${list.orderStatus} ==4 "	th:href="@{/admin/withdrawals/byId(rId=${list.orderId})}">审核</a>
+
 													<a th:if="${list.orderStatus} ==5 "
-													   th:onclick="'javascript:Foundation(\''+${list.orderId}+'\');'"
-													   th:href="@{#}">审核通过</a>
+													   th:href="@{/admin/withdrawals/updatStates(orderId=${list.orderId})}">审核通过</a>
+													<a th:if="${list.orderStatus} ==1 "
+													   th:href="@{/admin/withdrawals/updatSt(orderId=${list.orderId})}">取消提现</a>
 												</td>
 
 
@@ -176,7 +174,7 @@
 												th:if="${isFirstPagee}" href="javascript:void(0);">上一页</a></li>
 
 											<li
-												th:each="pageNo : ${#numbers.sequence(start, totalPages)}">
+												th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
 
 												<a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
 													<span th:text="${pageNo}"></span>

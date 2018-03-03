@@ -4,20 +4,19 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.refeng.util.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.refeng.model.LotteryInformation;
 import com.refeng.model.MenuUrl;
 import com.refeng.model.Role;
 import com.refeng.model.User;
 import com.refeng.pojo.MenuUrlList;
 import com.refeng.service.LotteryUserService;
 import com.refeng.service.UserService;
-import com.refeng.util.EdsUtil;
+
 
 @Controller
 public class PowerController {
@@ -49,13 +48,7 @@ public class PowerController {
 	@RequestMapping("/admin/power/newsEdit")
     public String newsEdit( String userName, Model model,HttpServletRequest request)   {
 
-   //		优化
-	    String user=request.getSession().getAttribute("admin").toString();
-	    Integer id=Integer.parseInt(user);
-		User users= userService.findById(id);
-		List<MenuUrlList> menuList=userService.menuList(users.getRole());
-		model.addAttribute("menuList",menuList);
-		model.addAttribute("user",users);
+
 
 
 		Role role=new Role();
@@ -195,7 +188,8 @@ public class PowerController {
 		List<MenuUrlList> menuList=userService.menuList(users.getRole());
 		model.addAttribute("menuList",menuList);
 		model.addAttribute("user",users);
-		users.setPassword(EdsUtil.decryptBasedDes(users.getPassword()));
+		String psaa= StringTools.MD5EncodeToHex(users.getPassword());
+		users.setPassword(psaa);
 		model.addAttribute("role",users);
 		
 
