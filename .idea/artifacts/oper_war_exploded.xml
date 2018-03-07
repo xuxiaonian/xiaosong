@@ -36,6 +36,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.24" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.41" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:1.5.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.2.RELEASE" />

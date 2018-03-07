@@ -14,7 +14,7 @@ import java.util.List;
 public interface CarouselPicMapper {
 
 //	pic的查询
-	@Select(" SELECT * FROM  TB_CAROUSEL_PIC ")
+	@Select(" SELECT * FROM  act.TB_CAROUSEL_PIC ")
 	@Results({
 			 @Result(property = "id", column = "id"),
 			@Result(property = "platform", column = "PLATFORM"),

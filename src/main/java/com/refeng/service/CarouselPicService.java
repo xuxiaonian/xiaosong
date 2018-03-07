@@ -2,8 +2,8 @@ package com.refeng.service;
 
 
 
-import com.refeng.config.DatabaseContextHolder;
-import com.refeng.config.DatabaseType;
+//import com.refeng.config.DatabaseContextHolder;
+//import com.refeng.config.DatabaseType;
 import com.refeng.mapper.CarouselPicMapper;
 import com.refeng.model.CarouselPic;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class CarouselPicService  {
      * @return
      */
     public List<CarouselPic> picList(){
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
         List<CarouselPic> picList=carouselPicMapper.picList();
         return picList;
     }

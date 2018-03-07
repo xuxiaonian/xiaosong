@@ -88,7 +88,7 @@ public interface LotteryUserMapper {
 	  
 	  
 //		账户的明细表  充值
-	     @Select("select  ERROR_DESC as feeAmout, CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , REAL_AMOUNT as  income,  FEE_AMOUNT as  procedures from  TB_ORDER_RECHARGE   where USER_ID=20089273 ")
+	     @Select("select  ERROR_DESC as feeAmout, CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , REAL_AMOUNT as  income,  FEE_AMOUNT as  procedures from  act.TB_ORDER_RECHARGE   where USER_ID=20089273 ")
 		List <Account> accountList(Integer query);
 
 

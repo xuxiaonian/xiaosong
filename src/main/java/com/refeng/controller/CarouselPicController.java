@@ -34,19 +34,11 @@ public class CarouselPicController {
 	 */
 	@RequestMapping("/admin/carouselPic/list")
     public String roleList( Model model, String  pageIndex ,HttpServletRequest request)   {
-        Integer pageNum=1;
-		System.out.println(pageIndex);
-		if (pageIndex!=null){
-			pageNum=Integer.parseInt(pageIndex);
-		}
+
 		List<CarouselPic> picList=carouselPicService.picList();
-//		Integer size=picList.size();
-//		Integer max=(int)Math.ceil((double)size/(double)10);
-//		picList=picList.subList((pageNum-1)*10,pageNum*10-1);
+
 		model.addAttribute("picList",picList);
-//		model.addAttribute("max",max);
-//		model.addAttribute("pageNum",pageNum);
-//		model.addAttribute("url", "/admin/carouselPic/list");
+;
 		return "carouselPic/picList";
 	}
 	/**
@@ -55,14 +47,8 @@ public class CarouselPicController {
 	 */
 	
 	@RequestMapping("/admin/carouselPic/newsEdit")
-    public String newsEdit( Model model,HttpServletRequest request)   {
-		//		优化
-		String user=request.getSession().getAttribute("admin").toString();
-		Integer id=Integer.parseInt(user);
-		User users= userService.findById(id);
-		List<MenuUrlList> menuList=userService.menuList(users.getRole());
-		model.addAttribute("menuList",menuList);
-		model.addAttribute("user",users);
+    public String newsEdit( Model model)   {
+
 		CarouselPic pic=new CarouselPic();
 		model.addAttribute("pic",pic);
 		return "carouselPic/newsEdit";
@@ -116,8 +102,28 @@ public class CarouselPicController {
 		model.addAttribute("pic",pic);
 		return "carouselPic/newsEdit";
 	}
-	
-	
-	
+
+
+	/**
+	 * 轮播图的展示
+	 * @return
+	 */
+	@RequestMapping("/admin/carouselPic/horseList")
+	public String horseList( Model model, String  pageIndex ,HttpServletRequest request)   {
+
+//		List<CarouselPic> picList=carouselPicService.picList();
+//
+//		model.addAttribute("picList",picList);
+		User users= new User();
+		model.addAttribute("users",users);
+		return "carouselPic/horseAdd";
+	}
+	@RequestMapping("/admin/carouselPic/horseAdds")
+	public String horseAdds( Model model, String  dddd ,HttpServletRequest request)   {
+
+		User users= new User();
+		model.addAttribute("users",users);
+		return "carouselPic/horseAdd";
+	}
 
 }

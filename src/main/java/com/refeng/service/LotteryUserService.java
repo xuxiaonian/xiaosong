@@ -4,9 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.refeng.config.DatabaseContextHolder;
-import com.refeng.config.DatabaseType;
-import com.refeng.mapper.FinanceMapper;
+
 import com.refeng.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,7 +152,7 @@ public class LotteryUserService  {
      */
 	public List<Account> accountList(Integer userId) {
 		// TODO Auto-generated method stub
-		DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+//		DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
 		List <Account> accountList=lotteryUserMapper.accountList(userId);
 		return accountList;
 	}

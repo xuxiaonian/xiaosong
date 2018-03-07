@@ -1,8 +1,8 @@
 package com.refeng.service;
 
 
-import com.refeng.config.DatabaseContextHolder;
-import com.refeng.config.DatabaseType;
+//import com.refeng.config.DatabaseContextHolder;
+//import com.refeng.config.DatabaseType;
 import com.refeng.mapper.FinanceMapper;
 import com.refeng.mapper.WithdrawalsMapper;
 import com.refeng.model.OperationLog;
@@ -43,12 +43,12 @@ public class WithdrawalsService {
     }
 
     public Withdrawals withdrawalsId(String id) {
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
         return withdrawalsMapper.WithdrawalsId(id);
     }
 
     public Integer updatState(String orderId, String reason, String state, String user) {
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
         Integer aad=0;
         aad = withdrawalsMapper.updatState(orderId,reason,Integer.parseInt(state));
         OperationLog log=new OperationLog();
@@ -58,7 +58,7 @@ public class WithdrawalsService {
         log.setOrderId(orderId);
         log.setType(0);
         log.setCreationTime(new Date());
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         aad=financeMapper.newsLog(log);
 
         return aad;

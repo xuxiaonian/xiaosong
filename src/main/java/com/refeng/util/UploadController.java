@@ -1,13 +1,17 @@
 package com.refeng.util;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.refeng.mapper.SaleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/uploadFile")
 @Controller
 public class UploadController {
-
+	@Autowired
+	private SaleMapper saleMapper;
 	//获取ip地址
 	@Value("${FTP_ADDRESS}")
 	private String FTP_ADDRESS;
@@ -83,8 +88,7 @@ public class UploadController {
 		return  null;
 		}
 
-//	@RequestMapping(params = "upPic", produces = "text/html")
-	@RequestMapping("/upPic")
+	@RequestMapping(params="upPic", produces = "text/html")
 	public ResponseEntity<String> updateImg(@RequestParam(value = "imgFile", required = false) MultipartFile  imgFile, String userId,
 											HttpServletRequest request, HttpServletResponse response) throws FileUploadException, IOException {
 		// 定义允许上传的文件扩展名 imgFile CommonsMultipartFile attachment
@@ -105,27 +109,40 @@ public class UploadController {
 					FTP_USERNAME, FTP_PASSWORD, FTP_BASEPATH, imagePath,
 					newName, imgFile.getInputStream());
 			//判断是否上传成功
-			if (result) {
-//				userId
-				System.out.println(userId);
+//				20089274
+			String dd="";
 				String url = IMAGE_BASE_URL+newName;
-				System.out.println(url);
+			if (result) {
+				Map map = new HashMap();
+				map.put("code", "0");
+				map.put("url", url);
+				 dd=JSONUtils.toJSONString(map);
+			}else{
+				Map map = new HashMap();
+				map.put("code", "1");
+				map.put("url", url);
+				 dd=JSONUtils.toJSONString(map);
+			}
+				saleMapper.updateInfoa(Integer.parseInt(userId),url);
+				saleMapper.updateInfob(Integer.parseInt(userId),url);
 				request.setCharacterEncoding("utf-8");
 				response.setContentType("text/html;charset=utf-8");
 				response.setHeader("Cache-Control", "no-cache");
 				PrintWriter out = response.getWriter();
-				out.print(url);
+				out.print(dd);
 				out.flush();
 				out.close();
 				return null;
-			}
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return  null;
 	}
-	}
+
+
+}
 
 
 

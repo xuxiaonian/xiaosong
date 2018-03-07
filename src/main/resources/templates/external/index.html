@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>连赢彩票下载</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+
+        background: url('/img/img/bg.png') no-repeat;
+        background-size: cover;
+    }
+    
+    img {
+        position: absolute;
+        width: 70%;
+        left: 50%;
+        margin-left: -35%;
+        bottom: 10%;
+    }
+    
+    #shop {
+        width: 50%;
+        font-size: 16px;
+        color: antiquewhite;
+        text-align: center;
+        position: fixed;
+        top: 32%;
+        left: 25%;
+        display: none;
+    }
+    
+    #ios {
+        display: none;
+    }
+    
+    #android {
+        display: none;
+    }
+    
+    #windows {
+        position: absolute;
+        top: 28%;
+        left: 50%;
+        width: 80%;
+        margin-left: -40%;
+        background-color: #f3f3f3;
+        display: none;
+        text-align: center;
+        border-radius: 10px;
+    }
+    
+    #outer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        opacity: 0.8;
+        filter: alpha(opacity=50);
+        display: none;
+    }
+    
+    .title {
+        color: black;
+        width: 100%;
+        text-align: center;
+        height: 46px;
+        line-height: 46px;
+        font-size: 16px;
+    }
+    
+    #btn_getNum {
+        height: 40px;
+        width: 90%;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+        margin-bottom: 20px;
+    }
+    
+    .bottom {
+        width: 100%;
+        height: 20px;
+    }
+    
+    .no {
+        width: 50%;
+        height: 46px;
+        line-height: 46px;
+        text-align: center;
+        float: left;
+    }
+    
+    .ok {
+        width: 50%;
+        height: 46px;
+        line-height: 46px;
+        text-align: center;
+        float: right;
+        color: white;
+        background-color: #f13a3a;
+        border-bottom-right-radius: 10px;
+    }
+    /* 提示框 */
+    
+    .alert {
+        min-width: 10px;
+        max-width: 280px;
+        position: fixed;
+        bottom: 40px;
+        background: #f13a3a;
+        border-radius: 6px;
+        color: white;
+        font-size: 0.8rem;
+        padding: 10px 15px;
+        text-align: center;
+        box-shadow: 0 1px 4px #f13a3a;
+        left: 50%;
+        -webkit-transform: translate3d(-50%, 0, 0);
+        -webkit-animation: alert 4s;
+    }
+    
+    @-webkit-keyframes alert {
+        0% {
+            -webkit-transform: translate3d(-50%, 0, 0);
+            opacity: 0;
+        }
+        10% {
+            -webkit-transform: translate3d(-50%, -30px, 0);
+        }
+        15% {
+            -webkit-transform: translate3d(-50%, -25px, 0);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: translate3d(-50%, -25px, 0);
+        }
+    }
+</style>
+
+<body>
+    <div id="shop">店主:<span id="name">小薇薇</span></div>
+    <img  class="img-circle" th:src="@{/img/img/ios.png}"  id="ios" onclick="sent()"/>
+    <img  class="img-circle" th:src="@{/img/img/android.png}"  id="android" onclick="sent()"/>
+
+    <!-- 弹出层 -->
+    <div id="outer">
+    </div>
+    <div id="windows">
+        <div class="title">与店主[<span id="name">小薇薇</span>]绑定后下载</div>
+        <input type="text" id="btn_getNum" placeholder="请输入手机号" />
+        <div class="bottom">
+            <div class="no" onclick="no()">取消</div>
+            <div class="ok" onclick="checkMobile(btn_getNum.value);">确定</div>
+        </div>
+
+
+    </div>
+
+</body>
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script language="javascript">
+    window.onload = function() {
+        var testurl = "http://i.cnblogs.com/?id=1";
+        var a = parseInt(testurl.indexOf('?')) + parseInt('4');
+        userId = testurl.substring(a);
+        //判断是ios Android
+        $.ajax({
+            url: '/external/confirm',
+            type: "post",
+            data: {
+                "userId": userId,
+            },
+            success: function(res) {
+                if(res.code==1){
+                    console.log(res.name);
+                    $("#shop").css("display", 'block');
+                    $("#name").html(res.name);
+                }
+
+
+
+            }
+        })
+
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        // alert('是否是Android：' + isAndroid);
+        // alert('是否是iOS：' + isiOS);
+        if (isAndroid) {
+            $("#android").css("display", 'block');
+        }
+        if (isiOS) {
+            $("#ios").css("display", 'block');
+        }
+
+
+
+    }
+
+    var userId='';
+    // 提示框方法
+    var msg = {
+        alert1: function(text) {
+
+            var h = document.createElement('div');
+            h.innerHTML = text;
+            h.setAttribute('class', 'alert');
+            document.querySelector('body').appendChild(h);
+            msg.fire(h);
+        },
+        fire: function(obj) {
+            var evt = ['webkitAnimationEnd', 'mozAnimationEnd', 'msAnimationEnd', 'oAnimationEnd', 'animationEnd'];
+            for (var i = 0;  evt.length >i; i++) {
+                obj.addEventListener(evt[i], function() {
+                    this.parentNode.removeChild(this);
+                });
+            }
+        }
+    };
+    // 发送手机号和id到后台
+    function sent() {
+        // var testurl = "http://i.cnblogs.com/?id=1";
+        // var a = parseInt(testurl.indexOf('?')) + parseInt('4');
+        // userId = testurl.substring(a);
+        console.log("发送");
+        if (userId) {
+            $("#outer").css("display", 'block');
+            $("#windows").css("display", 'block');
+        } else {
+            window.location.href = "http://www.baidu.com";
+        }
+
+    }
+    //手机号不为空格式正确验证  点击确定
+    function checkMobile(str) {
+        if (str == "") {
+            // alert("手机号不能为空！");
+            msg.alert1("手机号不能为空");
+        } else {
+            var re = /^1\d{10}$/;
+            if (re.test(str)) {
+                msg.alert1("手机号正确");
+                $("#outer").css("display", 'none');
+                $("#windows").css("display", 'none');
+                console.log(str);
+                // 发送手机号和id到后台
+                $.ajax({
+                    url: '/external/append',
+                    type: "post",
+                    data: {
+                        "userId": userId,
+                        "phone": str,
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        // 跳转到下载页面
+                        // window.location.href = "www.baidu.com";
+                    }
+                })
+
+            } else {
+                msg.alert1("手机号格式错误");
+            }
+        }
+    }
+    // 点击取消
+    function no() {
+        $("#outer").css("display", 'none');
+        $("#windows").css("display", 'none');
+    }
+
+
+    //
+</script>
+
+</html>

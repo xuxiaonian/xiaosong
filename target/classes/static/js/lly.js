@@ -16,6 +16,7 @@
         }
     })
 }
+
 function picRemove(obj){
 
     $("#lly").remove();
