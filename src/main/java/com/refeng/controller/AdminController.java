@@ -58,6 +58,7 @@ public class AdminController {
 
     		httpSession.setAttribute("uesr", userList.get(0));
 			httpSession.setAttribute("admin", userList.get(0).getId());
+			httpSession.setAttribute("realName", userList.get(0).getRealName());
     		List<MenuUrlList> menuList=userService.menuList(userList.get(0).getRole());
 			httpSession.setAttribute("menuList", menuList);
     		model.addAttribute("user",userList.get(0));
@@ -89,8 +90,7 @@ public class AdminController {
 	
     		return "dashboard";
     	}
-	/**
-	 * 注册
+	/**	 * 注册
 	 * 
 	 * @param model
 	 * @return

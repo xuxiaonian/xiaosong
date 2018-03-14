@@ -33,6 +33,9 @@ public class WithdrawalsService {
      * @return
      */
     public List<Withdrawals> fList(Query query){
+        if(query.getMode()==null || query.getMode()==0){
+            query.setMode(null);
+        }
         List<Withdrawals> picList=withdrawalsMapper.fList(query);
         return picList;
     }

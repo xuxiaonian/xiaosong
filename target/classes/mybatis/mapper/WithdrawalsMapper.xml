@@ -42,14 +42,14 @@
 		<if test="endTime != null">
 			AND #{endTime} >a.CREATE_TIMESTAMP
 		</if>
-		<if test="mode != null">
+		<if test="mode != null ">
 			AND #{mode} =a.ORDER_STATUS
 		</if>
 		<if test="order != null and order !=''">
 			AND #{order} =a.ORDER_ID
 		</if>
 		<if test="name != null and name !='' ">
-			AND #{name} =fo.USER_NAME
+			AND  fo.USER_NAME LIKE '%'||#{name}||'%'
 		</if>
 		) t
 		) where rm>((#{pageNum}-1)*#{size}) and (#{pageNum}*#{size})>rm

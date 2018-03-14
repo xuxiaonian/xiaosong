@@ -1,5 +1,6 @@
 package com.refeng.service;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -150,18 +151,30 @@ public class LotteryUserService  {
      * 账户明细
      * @return
      */
-	public List<Account> accountList(Integer userId) {
+	public List<Account> accountList(Integer userId,Query query) {
 		// TODO Auto-generated method stub
 //		DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-		List <Account> accountList=lotteryUserMapper.accountList(userId);
+		List <Account> accountList=null;
+		if (query.getMode()==null){
+			 accountList=lotteryUserMapper.accountList(userId);
+		}else if (query.getMode()==1){
+			 accountList=lotteryUserMapper.accountList1(userId ,query.getStartTime() ,query.getEndTime() );
+		}else if (query.getMode()==2){
+			 accountList=lotteryUserMapper.accountList2(userId ,query.getStartTime() ,query.getEndTime());
+		}else if (query.getMode()==3){
+			 accountList=lotteryUserMapper.accountList(userId);
+		}else {
+			 accountList=lotteryUserMapper.accountList4(userId ,query.getStartTime() ,query.getEndTime());
+		}
+
 		return accountList;
 	}
 	/**
 	 * 投注记录
 	 * @return
 	 */
-	public List<Betting>  bettingId(Integer userId) {
-		return lotteryUserMapper.bettingList(userId);
+	public List<Betting>  bettingId(Integer userId, Query query) {
+		return lotteryUserMapper.bettingList(userId,query.getStartTime() ,query.getEndTime());
 	}
 
 	/**
@@ -232,4 +245,31 @@ public class LotteryUserService  {
 
 		return state;
 	}
+
+	public Details details(String id) {
+		Details details=lotteryUserMapper.details(id);
+		String list=details.getList();
+		List <Match> matchList=new ArrayList<Match>();
+		String dd="|0^";
+		String[] lists=details.getList().split("\\^");
+		System.out.println(lists.length);
+		for (String ls:lists){
+			String[] a=ls.split("\\|");
+			String sId=a[0];
+			String[] b=a[1].split("#");
+			String wan=b[0];
+			String fen=b[1];
+			Match match=lotteryUserMapper.match(sId);
+			match.setzId(sId);
+			match.setWanfen(wan);
+			match.setTouzhu(fen);
+			matchList.add(match);
+		}
+		details.setdList(matchList);
+		return details;
+	}
+
+    public List<Account> programId(String id) {
+		return	lotteryUserMapper.programId(id);
+    }
 }

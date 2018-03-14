@@ -47,28 +47,18 @@
 								</div>
 							</div>
 							<div class="ibox-content" style="display: block;">
-								<form action="list">
+								<form action="bettingId">
 									<div class="row">
-
-										<div class="col-sm-2 m-b-xs">
-											<select name="mode" id="mode" class="form-control">
-												<option value="0" th:selected="${query.mode==null}">--请选择检索条件--</option>
-												<option value="1" th:selected="${query.mode==1}">昵称</option>
-												<option value="2" th:selected="${query.mode==2}">真实姓名</option>
-												<option value="3" th:selected="${query.mode==3}">手机号</option>
-												<option value="4" th:selected="${query.mode==4}">身份证号码</option>
-											</select>
+										<input type="hidden"  name="userId" th:value="${userId}"/>
+										<div class="col-sm-4 m-b-xs">
+											<label class="col-sm-4 control-label">开始时间:</label>
+											<input type="date" name="startTime1"
+												   th:value="${query.startTime1}"  />
 										</div>
-
-										<div class="col-sm-2 m-b-xs">
-
-											<input type="text" name="startTime1" placeholder="注册时间的开始"
-												th:value="${query.startTime1}" class="form_datetime" />
-										</div>
-										<div class="col-sm-2 m-b-xs">
-
-											<input type="text" name="endTime1" placeholder="注册时间的开始"
-												th:value="${query.startTime1}" class="form_datetime" />
+										<div class="col-sm-4 m-b-xs">
+											<label class="col-sm-4 control-label">结束时间：</label>
+											<input type="date" name="endTime1"
+												   th:value="${query.startTime1}"  />
 										</div>
 										<div class="col-sm-2 m-b-xs">
 											<button class="btn btn-primary btn-block" type="submit">
@@ -76,7 +66,8 @@
 											</button>
 										</div>
 										<div class="col-sm-2 m-b-xs">
-											<a href="javascript:history.go(-1)" style="padding: 10px 5px;background-color: #F8F8F8;border-radius: 2.5px;">返回上一页</a>
+											<button  class="btn btn-warning" onclick="javascript:history.back(-1);"
+													 type="button">&nbsp;&nbsp;&nbsp;&nbsp;返回上一页&nbsp;&nbsp;&nbsp;&nbsp;</button>
 										</div>
 									</div>
 
@@ -105,7 +96,8 @@
 												<th width="10%">购买时间</th>
 												<th width="10%">期号</th>
 												<th width="8%">彩种名称</th>
-												<th width="18%">方案编号</th>
+												<th width="13%">方案编号</th>
+												<th width="5%">跟单列表</th>
 												<th width="10%">发起人</th>
 												<th width="10%">购买金额（元）</th>
 												<th width="8%">购买类型</th>
@@ -122,9 +114,10 @@
 												<td th:text="${#dates.format(list.buyTime,'yyyy-MM-dd')}">Onions</td>
 												<td th:text="${list.batchId}">Onions</td>
 												<td th:text="${list.lotteryId}">Onions</td>
-												<td><a
-													th:href="@{/admin/lotteryUser/byUserId(userId=${list.orderId})}"><p
+												<td><a th:href="@{/admin/lotteryUser/programme(id=${list.orderId})}"><p
 															th:text="${list.programId} "></p></a></td>
+												<td ><a th:href="@{/admin/lotteryUser/programId(id=${list.programId})}"><p
+														th:text="查看"></p></a></td>
 												<td th:text="${list.infoUser}">Onions</td>
 												<td th:text="${list.realAmout}">Onions</td>
 												<td th:text="${list.buyType}">Onions</td>

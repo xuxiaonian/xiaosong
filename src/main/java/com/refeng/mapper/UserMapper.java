@@ -39,8 +39,8 @@ public interface UserMapper {
 	@Select(" select ID as id,LOGIN_NAME as loginName,REAL_NAME as realName,PASSWORD as password , ROLE as role , LOGINTIME as loginTime , DESCRIBE as describe ,PHONE as  phone ,STATE as state , EMAIL as email "
 			+ "from F_LOGIN_USER  where  ID= #{id} ")
 	User findById(Integer id);
-
-	List<Role> roleList(String userName);
+	@Select(" select id ,name,CREATION_TIME as time,STATE as state from F_ROLE where name like '%'||#{userName}||'%' ")
+	List<Role> roleLists(String userName);
 //	角色的列表的查询
 	@Select(" select id ,name,CREATION_TIME as time,STATE as state from F_ROLE ")
 	List<Role> roleList();
@@ -89,7 +89,7 @@ public interface UserMapper {
 //	用户表的查询
 	@Select(" select  u.ID as id, u.ESTABLISH_TIME as establishTime, u.STATE as state, u.LOGIN_NAME as loginName, u.REAL_NAME as realName ,  u.ROLE as role , LOGINTIME  as loginTime , r.name as rname ,u.PHONE as phone ,u.EMAIL as email ,u.DESCRIBE as describe from F_LOGIN_USER u LEFT JOIN F_ROLE r ON u.ROLE=r.ID  ")
 	List<User> userList();
-	@Select(" select  u.ID as id, u.ESTABLISH_TIME as establishTime, u.STATE as state, u.LOGIN_NAME as loginName, u.REAL_NAME as realName ,  u.ROLE as role , LOGINTIME  as loginTime , r.name as rname ,u.PHONE as phone ,u.EMAIL as email ,u.DESCRIBE as describe from F_LOGIN_USER u LEFT JOIN F_ROLE r ON u.ROLE=r.ID  where  u.REAL_NAME like  CONCAT('%',#{userName},'%')   ")
+	@Select(" select  u.ID as id, u.ESTABLISH_TIME as establishTime, u.STATE as state, u.LOGIN_NAME as loginName, u.REAL_NAME as realName ,  u.ROLE as role , LOGINTIME  as loginTime , r.name as rname ,u.PHONE as phone ,u.EMAIL as email ,u.DESCRIBE as describe from F_LOGIN_USER u LEFT JOIN F_ROLE r ON u.ROLE=r.ID  where  u.REAL_NAME  like '%'||#{userName}||'%' ")
 	List<User> userLists(String userName);
 	
 //	用户表的列表ID的查询

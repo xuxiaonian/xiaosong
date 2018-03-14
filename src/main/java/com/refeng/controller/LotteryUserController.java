@@ -124,10 +124,12 @@ public String lotteryUserList(@Valid Query query , Model model,HttpServletReques
 	 */
 	@GetMapping("/admin/lotteryUser/accountId")
 	public String accountId(@Valid Query query ,Model model,Integer userId, HttpServletRequest request) {
-
-		List<Account>  accountList = lotteryUserService.accountList(userId);
+		query= QueryUtil.query(query);
+		List<Account>  accountList = lotteryUserService.accountList(userId,query);
 		model.addAttribute("accountList",accountList);
 		model.addAttribute("query",query);
+		model.addAttribute("userId",userId);
+
 		return "lottery/accountDetails";
 	}
 	
@@ -140,9 +142,11 @@ public String lotteryUserList(@Valid Query query , Model model,HttpServletReques
 	 */
 	@GetMapping("/admin/lotteryUser/bettingId")
 	public String bettingId(@Valid Query query ,Model model,Integer userId, HttpServletRequest request) {
-		List<Betting>  bettingList =lotteryUserService.bettingId(userId);
+		query= QueryUtil.query(query);
+		List<Betting>  bettingList =lotteryUserService.bettingId(userId,query);
 		model.addAttribute("bettingList",bettingList);
 		model.addAttribute("query",query);
+		model.addAttribute("userId",userId);
 		return "lottery/bettingList";
 	}
 
@@ -180,12 +184,38 @@ public String lotteryUserList(@Valid Query query , Model model,HttpServletReques
 		}
 	}
 
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * 投注記錄（投注方案）
+	 * @param model
+
+	 * @return
+	 */
+	@GetMapping ("/admin/lotteryUser/programme")
+	String details(String id,Model model) {
+		Details details = lotteryUserService.details(id);
+		model.addAttribute("details",details);
+		return "lottery/details";
+
+	}
+
+
+
+	/**
+	 * 跟单人数
+	 * @param model
+
+	 * @return
+	 */
+	@GetMapping("/admin/lotteryUser/programId")
+	public String programId(Model model,String id) {
+
+		List<Account>  programId = lotteryUserService.programId(id);
+		model.addAttribute("programId",programId);
+
+
+		return "lottery/programId";
+	}
 	
 	
 

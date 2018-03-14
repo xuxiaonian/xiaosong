@@ -1,9 +1,8 @@
 package com.refeng.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import com.refeng.model.CarouselPic;
 
+import com.refeng.model.TbMsgOffic;
 import com.refeng.model.User;
 import com.refeng.pojo.MenuUrlList;
 import com.refeng.service.CarouselPicService;
@@ -103,27 +102,96 @@ public class CarouselPicController {
 		return "carouselPic/newsEdit";
 	}
 
-
 	/**
-	 * 轮播图的展示
+	 * 轮播图的删除
+	 * @return
+	 */
+	@RequestMapping("/admin/carouselPic/deletePic")
+	public void deletePic(HttpServletResponse response, String  rId ) {
+
+		Integer offic=carouselPicService.deletePic(Integer.valueOf(rId));
+		try {
+			response.sendRedirect("/admin/carouselPic/list");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+	}
+	/**
+	 * 消息推送的list
 	 * @return
 	 */
 	@RequestMapping("/admin/carouselPic/horseList")
 	public String horseList( Model model, String  pageIndex ,HttpServletRequest request)   {
 
-//		List<CarouselPic> picList=carouselPicService.picList();
-//
-//		model.addAttribute("picList",picList);
-		User users= new User();
-		model.addAttribute("users",users);
-		return "carouselPic/horseAdd";
+		List<TbMsgOffic> officList=carouselPicService.officList();
+
+		model.addAttribute("officList",officList);
+
+		return "carouselPic/officList";
 	}
+	/**
+	 * 消息推送的新增页面
+	 * @return
+	 */
 	@RequestMapping("/admin/carouselPic/horseAdds")
-	public String horseAdds( Model model, String  dddd ,HttpServletRequest request)   {
+	public String horseAdds( Model model, HttpServletRequest request)   {
 
-		User users= new User();
+		TbMsgOffic users= new TbMsgOffic();
 		model.addAttribute("users",users);
 		return "carouselPic/horseAdd";
 	}
 
+
+	/**
+	 *  消息推送的新增保存
+	 * @return
+	 */
+	@RequestMapping("/admin/carouselPic/horseUp")
+	public void horseUp(TbMsgOffic tbMsgOffic,  HttpServletResponse response,HttpServletRequest request) {
+
+		tbMsgOffic.setAuthor(request.getSession().getAttribute("realName").toString());
+		Integer stare = carouselPicService.horseUp(tbMsgOffic);
+		try {
+			response.sendRedirect("/admin/carouselPic/horseList");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+	}
+
+
+	/**
+	 * 消息推送的修改
+	 * @return
+	 */
+	@RequestMapping("/admin/carouselPic/horseUpate")
+	public String horseUp( Model model, String rId ,HttpServletRequest request) {
+
+		TbMsgOffic offic=carouselPicService.offic(Integer.valueOf(rId));
+		model.addAttribute("users",offic);
+		return "carouselPic/horseAdd";
+
+	}
+
+	/**
+	 * 消息推送的删除
+	 * @return
+	 */
+	@RequestMapping("/admin/carouselPic/delete")
+	public void delete(HttpServletResponse response, String  rId ) {
+
+		Integer offic=carouselPicService.delete(Integer.valueOf(rId));
+		try {
+			response.sendRedirect("/admin/carouselPic/horseList");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+	}
 }

@@ -40,7 +40,7 @@ public interface FinanceMapper {
 
 
 	//	日志的新增
-	@Insert("INSERT INTO  act.F_OPERATION_LOG (ID , CREATION_TIME ,TYPE, CONTENT ,OPERATOR , REASON ,ORDER_ID) " +
+	@Insert("INSERT INTO  F_OPERATION_LOG (ID , CREATION_TIME ,TYPE, CONTENT ,OPERATOR , REASON ,ORDER_ID) " +
 			" VALUES (LOGID.nextval ,#{creationTime},#{type},#{content},#{operator},#{reason},#{orderId}) ")
 	Integer newsLog (OperationLog log);
 }

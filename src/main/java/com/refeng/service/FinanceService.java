@@ -29,6 +29,9 @@ public class FinanceService {
      * @return
      */
     public List<Recharge> fList(Query query){
+        if(query.getMode()==null || query.getMode()==0){
+            query.setMode(null);
+        }
         List<Recharge> picList=financeMapper.fList(query);
         return picList;
     }
@@ -58,4 +61,5 @@ public class FinanceService {
         aad=financeMapper.newsLog(log);
         return aad;
     }
+
 }

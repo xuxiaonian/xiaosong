@@ -18,11 +18,11 @@ public class  Account{
 //	类型
     private String type;
 //	收入
-    private String income;
+    private Float income;
 //	支出
-    private String expenditure;
+    private Float expenditure;
 //	手续费
-    private String procedures;
+    private Float procedures;
 //    支付说明
     private String payment;
     
@@ -57,24 +57,37 @@ public class  Account{
 		return type;
 	}
 	public void setType(String type) {
+//		认购类型（0-用户自选 1-合买发起认购 2-参与合买认购 3-系统补单）
+		if(type.equals("0")){
+			type	="用户自选";
+		}
+		if(type.equals("1")){
+			type	="合买发起认购";
+		}if(type.equals("2")){
+			type	="参与合买认购";
+		}if(type.equals("3")){
+			type	="系统补单";
+		}
+
+
 		this.type = type;
 	}
-	public String getIncome() {
+	public Float getIncome() {
 		return income;
 	}
-	public void setIncome(String income) {
+	public void setIncome(Float income) {
 		this.income = income;
 	}
-	public String getExpenditure() {
+	public Float getExpenditure() {
 		return expenditure;
 	}
-	public void setExpenditure(String expenditure) {
+	public void setExpenditure(Float expenditure) {
 		this.expenditure = expenditure;
 	}
-	public String getProcedures() {
+	public Float getProcedures() {
 		return procedures;
 	}
-	public void setProcedures(String procedures) {
+	public void setProcedures(Float procedures) {
 		this.procedures = procedures;
 	}
 	public String getPayment() {

@@ -12,11 +12,11 @@ import java.util.List;
 public interface WithdrawalsMapper {
 
 //	条件查询
-	List<Withdrawals> fList(Query query);
+	List<Withdrawals> fList (Query query);
 	//	页数
 	Integer lotterycount(Query query);
 
-	Withdrawals WithdrawalsId(String id);
+	Withdrawals WithdrawalsId (String id);
 
 	//修改
 	@Update(" update act.TB_ORDER_WITHDRAW  set  ERROR_DESC=#{reason} ,ORDER_STATUS=#{state}  where ORDER_ID =#{orderId} ")

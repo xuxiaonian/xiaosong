@@ -286,7 +286,16 @@
 										</div>
 									</div>
 									<div class="hr-line-dashed"></div>
-
+									<div class="form-group">
+										<button  class="btn btn-warning" onclick="javascript:history.back(-1);"
+												 type="button">&nbsp;&nbsp;&nbsp;&nbsp;返回上一页&nbsp;&nbsp;&nbsp;&nbsp;</button>
+										<a
+												th:href="@{/admin/lotteryUser/accountId(userId=${lottery.userId})}">账户明细</a>
+										<a
+												th:href="@{/admin/lotteryUser/bettingId(userId=${lottery.userId})}">投注记录</a>
+										<a th:href="@{/admin/lotteryUser/money(userId=${lottery.userId})}">加减款</a>
+									</div>
+									<div class="hr-line-dashed"></div>
 									<div class="ibox-title">
 										<h5>重置密码</h5>
 										<div class="ibox-tools">
@@ -317,7 +326,7 @@
 
 															<div class="col-xs-12 j-register-top">
 																<div class="col-xs-3 j-name">
-																	<label for="name">用户昵称</label>
+																	<label >用户昵称</label>
 																</div>
 																<div class="col-xs-7 form-group">
 																	<p th:text="${lottery.userName} "></p>
@@ -326,7 +335,7 @@
 															</div>
 															<div class="col-xs-12 j-register-top">
 																<div class="col-xs-3 j-name">
-																	<label for="name">新密码</label>
+																	<label >新密码</label>
 																</div>
 																<div class="col-xs-7 form-group">
 																	<input type="password" maxlength="50" id="passWord"
@@ -336,7 +345,7 @@
 															</div>
 															<div class="col-xs-12 j-register-top">
 																<div class="col-xs-3 j-name">
-																	<label for="name">确认新密码</label>
+																	<label >确认新密码</label>
 																</div>
 																<div class="col-xs-7 form-group">
 																	<input type="password" maxlength="15" id="passWords"

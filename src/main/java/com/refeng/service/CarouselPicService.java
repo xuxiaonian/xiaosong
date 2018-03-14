@@ -6,6 +6,7 @@ package com.refeng.service;
 //import com.refeng.config.DatabaseType;
 import com.refeng.mapper.CarouselPicMapper;
 import com.refeng.model.CarouselPic;
+import com.refeng.model.TbMsgOffic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,29 @@ public class CarouselPicService  {
         CarouselPic picById=carouselPicMapper.picById(id);
         return picById;
     }
+
+    public List<TbMsgOffic> officList() {
+
+        return carouselPicMapper.officList(); }
+
+    public Integer horseUp(TbMsgOffic tbMsgOffic) {
+        tbMsgOffic.setDate(new Date());
+        Integer stry=0;
+        if (tbMsgOffic.getMsgId()==null){
+            stry= carouselPicMapper.horseUp(tbMsgOffic);
+        }else{
+            stry= carouselPicMapper.horseUpdate(tbMsgOffic);
+        }
+        return stry ;
+    }
+
+    public TbMsgOffic offic(Integer rid) {
+        return carouselPicMapper.offic(rid); }
+
+    public Integer delete(Integer rid) {
+        return carouselPicMapper.delete(rid); }
+
+    public Integer deletePic(Integer rid) {
+        return carouselPicMapper.deletePic(rid); }
 
 }

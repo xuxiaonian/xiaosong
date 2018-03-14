@@ -74,9 +74,9 @@ public class UserService {
     public List<Role>  roleList(String userName){
     	List<Role>  roleList =new ArrayList<Role>();
     	
-//          roleList = userMapper.roleList(userName);
+
     	if(userName!=null && !userName.isEmpty() ) {
-    		 roleList = userMapper.roleList(userName);
+    		 roleList = userMapper.roleLists(userName);
     	}else {
     		 roleList = userMapper.roleList();
     		}

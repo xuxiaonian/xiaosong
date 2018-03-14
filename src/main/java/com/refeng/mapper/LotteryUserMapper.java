@@ -88,17 +88,24 @@ public interface LotteryUserMapper {
 	  
 	  
 //		账户的明细表  充值
-	     @Select("select  ERROR_DESC as feeAmout, CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , REAL_AMOUNT as  income,  FEE_AMOUNT as  procedures from  act.TB_ORDER_RECHARGE   where USER_ID=20089273 ")
+	     @Select("select  ERROR_DESC as feeAmout, CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , REAL_AMOUNT as  income,  FEE_AMOUNT as  procedures from  act.TB_ORDER_RECHARGE   where USER_ID=#{query} ")
 		List <Account> accountList(Integer query);
 
 
 	//投注记录
-	@Select("SELECT a.ORDER_ID as orderId,  a.BUY_TIMESTAMP as buyTime,  a.BATCH_ID as batchId,  a.LOTTERY_ID as lotteryId,  a.PROGRAM_ID as programId, " +
+	@Select("<script> SELECT a.ORDER_ID as orderId,  a.BUY_TIMESTAMP as buyTime,  a.BATCH_ID as batchId,  a.LOTTERY_ID as lotteryId,  a.PROGRAM_ID as programId, " +
 	"a.REAL_AMOUNT as realAmout, a.ORDER_STATUS as orderStatus, a.BONUS_AMOUNT as bonusAmout, b.ORDER_STATUS as issueOrderStaus, c.USER_NAME as infoUser, "+
 	"a.BUY_TYPE as buyType FROM gpc.TB_ORDER_INFO a "+
 	"LEFT JOIN gpc.TB_ORDER_ISSUE b ON a.ORDER_ID=b.ORDER_ID " +
-	"LEFT JOIN gpc.TB_PROGRAM_INFO c ON c.PROGRAM_ID=a.PROGRAM_ID Where a.USER_ID=#{userId}")
-	List <Betting> bettingList(Integer userId);
+	"LEFT JOIN gpc.TB_PROGRAM_INFO c ON c.PROGRAM_ID=a.PROGRAM_ID Where a.USER_ID=#{userId}"
+			+"<if test='startTime !=null '>"
+			+ " and BUY_TIMESTAMP > #{startTime} "
+					+ "</if>"
+					+ "<if test='endTime !=null '>"
+					+ " and #{endTime} >BUY_TIMESTAMP "
+					+ "</if>"
+					+"</script>" )
+	List <Betting> bettingList(@Param("userId")Integer userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
 
 
 
@@ -115,4 +122,58 @@ public interface LotteryUserMapper {
 			" OVER_FLAG,CREATE_TIMESTAMP,TRANSACT_TIMESTAMP,ORDER_DESC,REMARK ) " +
 			" VALUES ((#{orderId} || act.seq_id.nextval) ,#{userId},#{paytype},#{amout},#{fee},#{real},#{status},#{flag},#{create},#{transact},#{desc},#{remark}) ")
 	Integer initRecharce (Recharce pic);
+
+	@Select("<script>" +
+			" SELECT a.PROGRAM_ID as pId ,a.ORDER_AMOUNT  as money ,b.SUB_LOTTERY_NAME as subName ,b.GAME_LIST as list  , c.ITEMS_COUNT as itemsCount,c.TIMES_COUNT as timesCount ,d.order_status as orderStatus ,d.bonus_flag as bonusFlag ,b.PASS_TYPE as type " +
+			" FROM GPC.TB_ORDER_INFO a  " +
+			" LEFT JOIN GPC.TB_PROGRAM_INFO b ON a.PROGRAM_ID=b.PROGRAM_ID" +
+			"  LEFT JOIN GPC.tb_original_code c on a.PROGRAM_ID=c.PROGRAM_ID " +
+			"   LEFT JOIN GPC.tb_order_issue d on a.PROGRAM_ID=d.PROGRAM_ID" +
+			" WHERE a.ORDER_ID=#{id} " +
+			"</script>")
+    Details details(String id);
+	@Select("<script>" +
+			" SELECT a.LOTTERY_ID as lotteryId,a.PLAY_TIME as payTime,a.HOST_TEAM as zname,a.GUEST_TEAM as kname, a.HOST_FULL_SCORE as zqf " +
+			" ,a.HOST_HALF_SCORE as zbf, " +
+			" a.GUEST_FULL_SCORE as kqf , " +
+			" a.GUEST_HALF_SCORE as kbf " +
+			" FROM GPC.TB_JC_GAME_INFO a  WHERE a.GAME_ID=#{id} " +
+
+			"</script>")
+	Match match(String sId);
+
+	@Select("<script>"+
+			"select  CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , REAL_AMOUNT as  income,  FEE_AMOUNT as  procedures from  act.TB_ORDER_RECHARGE   where USER_ID=#{userId} " +
+			 "<if test='startTime !=null '>"
+			+ " and CREATE_TIMESTAMP > #{startTime} "
+			+ "</if>"
+			+ "<if test='endTime !=null '>"
+			+ " and #{endTime} >CREATE_TIMESTAMP "
+			+ "</if>"
+			+"</script>" )
+	List<Account> accountList1(@Param("userId")Integer userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+	@Select("<script>"+
+			"select   CREATE_TIMESTAMP as dealTime, ORDER_ID as orderId ,ORDER_DESC as type , ORDER_AMOUNT as  expenditure,  REAL_AMOUNT as  procedures from  act.TB_ORDER_WITHDRAW   where USER_ID=#{userId} " +
+			"<if test='startTime !=null '>"
+			+ " and CREATE_TIMESTAMP > #{startTime} "
+			+ "</if>"
+			+ "<if test='endTime !=null '>"
+			+ " and #{endTime} >CREATE_TIMESTAMP"
+			+ "</if>"
+			+"</script>" )
+	List<Account> accountList4(@Param("userId")Integer userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+	@Select("<script>"+
+			"select   BUY_TIMESTAMP as dealTime, ORDER_ID as orderId ,BUY_TYPE as type , ORDER_AMOUNT as  expenditure ,ORDER_TYPE_DESC as payment from  gpc.tb_order_info  where USER_ID=#{userId} " +
+			"<if test='startTime !=null '>"
+			+ " and BUY_TIMESTAMP > #{startTime} "
+			+ "</if>"
+			+ "<if test='endTime !=null '>"
+			+ " and #{endTime} >BUY_TIMESTAMP"
+			+ "</if>"
+			+"</script>" )
+	List<Account> accountList2(@Param("userId")Integer userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+	@Select("<script>"+
+			"  SELECT ORDER_AMOUNT as income , BONUS_AMOUNT as expenditure , USER_NAME as admin , BUY_TIMESTAMP  as dealTime  FROM gpc.TB_ORDER_INFO   WHERE ISFOLLOW=1 AND FOLLOW_PROGRAM_ID =#{id}   ORDER BY ORDER_AMOUNT ASC " +
+			"</script>" )
+	List<Account> programId(String id);
 }

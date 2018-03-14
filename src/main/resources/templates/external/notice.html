@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>官方消息</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .box {
+        margin-top: 32px;
+        margin-left: 32px;
+        margin-right: 32px;
+    }
+    
+    .boxtime {
+        color: #848484;
+        font-size: 13px;
+        height: 30px;
+        line-height: 30px;
+    }
+    
+    .box-left {
+        float: left;
+    }
+    
+    .box-right {
+        float: right;
+    }
+    
+    .title {
+        color: #333333;
+        font-size: 15px;
+        height: 30px;
+    }
+    
+    .box-words {
+        color: #4c4c4c;
+        font-size: 14px;
+    }
+    
+    .p1 {
+        height: 30px;
+        line-height: 30px;
+    }
+    
+    #words {
+        line-height: 23px;
+        text-indent: 2em;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div class="title">
+            <p id="title" th:text="${offic.title}" ></p>
+        </div>
+        <div class="boxtime">
+            <div class="box-left">发布时间:<span id="time"   th:text="${#dates.format(offic.date,'yyyy-MM-dd hh:mm:ss')}">2018-12-26</span></div>
+            <div class="box-right">来源:<span id="source" th:text="${offic.source}">连赢官方</span></div>
+        </div>
+        <div class="box-words">
+            <div class="p1">尊敬的连赢彩票用户:</div>
+            <div id="words">
+                <span id="word" th:text="${offic.context}"></span>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>

@@ -29,7 +29,7 @@
 			<div class="row wrapper border-bottom white-bg page-heading"
 				th:fragment="headerNav">
 				<div class="col-lg-10">
-					<h2>用户管理</h2>
+					<h2>提现管理</h2>
 
 				</div>
 				<div class="col-lg-2"></div>
@@ -59,23 +59,23 @@
 
 											</select>
 										</div>
-										<div class="col-sm-3 m-b-xs">
+										<div class="col-sm-2 m-b-xs">
 											<input name="name" placeholder="昵称" class="form-control"
 												type="text" th:value="${query.name}" />
 										</div>
-										<div class="col-sm-3 m-b-xs">
+										<div class="col-sm-2 m-b-xs">
 											<input name="order" placeholder="订单号" class="form-control"
 												type="text" th:value="${query.order}" />
 										</div>
-										<div class="col-sm-2 m-b-xs">
-
-											<input type="text" name="startTime1" placeholder="充值时间开始"
-												th:value="${query.startTime1}" class="form_datetime" />
+										<div class="col-sm-4 m-b-xs">
+											<label class="col-sm-4 control-label">开始时间:</label>
+											<input type="date" name="startTime1"
+												   th:value="${query.startTime1}"  />
 										</div>
-										<div class="col-sm-2 m-b-xs">
-
-											<input type="text" name="endTime1" placeholder="充值时间结束"
-												th:value="${query.startTime1}" class="form_datetime" />
+										<div class="col-sm-4 m-b-xs">
+											<label class="col-sm-4 control-label">结束时间：</label>
+											<input type="date" name="endTime1"
+												   th:value="${query.endTime1}"  />
 										</div>
 
 									</div>

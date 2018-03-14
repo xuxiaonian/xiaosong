@@ -5,14 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-//@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+
+//@SpringBootApplication
+//public class Operlication {
+//	public static void main(String[] args) {
+//		SpringApplication.run(Operlication.class, args);
+//	}
+//}
 @SpringBootApplication
-public class Operlication {
-	public static void main(String[] args) {
-		SpringApplication.run(Operlication.class, args);
-	}
-}
-/*@SpringBootApplication
 public class Operlication extends SpringBootServletInitializer {
 
 	@Override
@@ -24,4 +24,4 @@ public class Operlication extends SpringBootServletInitializer {
 		SpringApplication.run(Operlication.class, args);
 	}
 
-}*/
+}

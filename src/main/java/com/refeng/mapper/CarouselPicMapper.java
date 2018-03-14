@@ -1,10 +1,7 @@
 package com.refeng.mapper;
 
 
-import com.refeng.model.CarouselPic;
-import com.refeng.model.MenuUrl;
-import com.refeng.model.Role;
-import com.refeng.model.User;
+import com.refeng.model.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -72,4 +69,40 @@ public interface CarouselPicMapper {
 			@Result(property = "state", column = "STATE")
 	})
 	CarouselPic picById(Integer id);
+
+
+	@Select(" SELECT * FROM  act.TB_MSG_OFFIC ")
+	@Results({
+			@Result(property = "msgId", column = "MSG_ID"),
+			@Result(property = "date", column = "CREATETIME"),
+			@Result(property = "title", column = "TITLE"),
+			@Result(property = "context", column = "CONTEXT"),
+			@Result(property = "author", column = "MES_AUTHOR"),
+			@Result(property = "source", column = "SOURCE")
+
+	})
+    List<TbMsgOffic> officList();
+
+	@Insert("INSERT INTO act.TB_MSG_OFFIC (CREATETIME,TITLE,CONTEXT,MES_AUTHOR,SOURCE) " +
+			" VALUES (#{date},#{title},#{context},#{author},#{source}) ")
+	Integer horseUp(TbMsgOffic tbMsgOffic);
+	@Select(" SELECT * FROM  act.TB_MSG_OFFIC where MSG_ID= #{rid}")
+	@Results({
+			@Result(property = "msgId", column = "MSG_ID"),
+			@Result(property = "date", column = "CREATETIME"),
+			@Result(property = "title", column = "TITLE"),
+			@Result(property = "context", column = "CONTEXT"),
+			@Result(property = "author", column = "MES_AUTHOR"),
+			@Result(property = "source", column = "SOURCE")
+
+	})
+	TbMsgOffic offic(Integer rid);
+	@Update("update act.TB_MSG_OFFIC SET CREATETIME=#{date},TITLE=#{title},CONTEXT=#{context}, " +
+			"MES_AUTHOR=#{author},SOURCE=#{source}" +
+			" WHERE MSG_ID=#{msgId} ")
+	Integer horseUpdate(TbMsgOffic tbMsgOffic);
+	@Delete("DELETE FROM act.TB_MSG_OFFIC WHERE MSG_ID=#{rid} ")
+	Integer delete(Integer rid);
+	@Delete("DELETE FROM act.TB_CAROUSEL_PIC WHERE ID=#{rid} ")
+    Integer deletePic(Integer rid);
 }

@@ -6,6 +6,8 @@ package com.refeng.controller;
 
 import com.refeng.model.Record;
 import com.refeng.model.SaleUser;
+import com.refeng.model.TbMsgOffic;
+import com.refeng.service.CarouselPicService;
 import com.refeng.service.ExternalService;
 import com.refeng.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import java.util.Map;
 public class ExternalController {
 	@Autowired
 	private ExternalService externalService;
+	@Autowired
+	private CarouselPicService carouselPicService;
 	/**
 	 *检查是否存在
 	 * @return
@@ -78,7 +82,18 @@ public class ExternalController {
 
 
 
+	/**
+	 * 官方消息
+	 * @return
+	 */
+	@GetMapping("/external/newsId")
+	public String horseUp( String  rId ,Model model ) {
 
+		TbMsgOffic offic=carouselPicService.offic(Integer.valueOf(rId));
+		model.addAttribute("offic",offic);
+
+		return "external/notice";
+	}
 
 
 }

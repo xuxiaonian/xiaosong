@@ -30,7 +30,7 @@
 			<div class="row wrapper border-bottom white-bg page-heading"
 				th:fragment="headerNav">
 				<div class="col-lg-10">
-					<h2>轮播图</h2>
+					<h2>官方消息</h2>
 
 				</div>
 				<div class="col-lg-2"></div>
@@ -51,9 +51,9 @@
 
 								<div class="row">
 									<div class="col-sm-6 m-b-xs">
-										<a th:href="@{newsEdit}" class="btn btn-white btn-sm"
+										<a th:href="@{horseAdds}" class="btn btn-white btn-sm"
 											data-toggle="tooltip" data-placement="left" title=""
-											data-original-title="Refresh inbox"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增轮播图&nbsp;&nbsp;&nbsp;&nbsp;</a>
+											data-original-title="Refresh inbox"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增官方消息&nbsp;&nbsp;&nbsp;&nbsp;</a>
 									</div>
 									<div class="col-sm-6 m-b-xs"></div>
 								</div>
@@ -75,55 +75,29 @@
 									<table class=" table table-hover" data-page-size="10">
 										<thead>
 											<tr>
-												<th width="3%">ID</th>
-												<!--<th width="3%">推广平台</th>-->
-												<th width="5%">活动标题</th>
-												<!--<th width="5%">活动状态</th>-->
-												<th width="5%">图片</th>
-												<th width="5%">活动URL</th>
-												<th width="6%">显示位置</th>
-												<th width="3%">图片位置</th>
-												<th width="8%">活动开始时间</th>
-												<th width="8%">活动结束时间</th>
-												<th width="8%">显示开始时间</th>
-												<th width="8%">显示结束时间</th>
-												<!--<th width="15%">活动详情</th>-->
-												<th width="8%">创建时间</th>
-												<th width="5%">创建人</th>
-												<th width="5%">操作</th>
+												<th width="10%">官方消息ID</th>
+												<th width="10%">创建时间</th>
+												<th width="10%">消息标题</th>
+												<th width="30%">消息内容</th>
+												<th width="10%">消息创建人</th>
+												<th width="10%">消息来源</th>
+												<th width="10%">操作</th>
 
 
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="list : ${picList}">
-												<td th:text="${list.id}">Onions</td>
-												<!--<td th:text="${list.platform1}">Onions</td>-->
+											<tr th:each="list : ${officList}">
+												<td th:text="${list.msgId}">Onions</td>
+												<td th:text="${#dates.format(list.date,'yyyy-MM-dd')}">Onions</td>
 												<td th:text="${list.title}">Onions</td>
-												<!--<td th:text="${list.state1}">Onions</td>-->
-												<td><img th:src="${list.picUrl}"
-													style="width: 110px; height: 70px;" /></td>
-												<td th:text="${list.exhibitionUrl}">Onions</td>
-												<td th:text="${list.exhibitionPosition1}">Onions</td>
-												<td th:text="${list.exhibitionPositionWeight}">Onions</td>
-												<td
-													th:text="${#dates.format(list.startActivityTime,'yyyy-MM-dd')}">Onions</td>
-												<td
-													th:text="${#dates.format(list.endActivityTime,'yyyy-MM-dd')}">Onions</td>
-												<td
-													th:text="${#dates.format(list.startExhibitionTime,'yyyy-MM-dd')}">Onions</td>
-												<td
-													th:text="${#dates.format(list.endExhibitionTime,'yyyy-MM-dd')}">Onions</td>
-												<!--<td th:text="${list.details}">Onions</td>-->
-												<!--<td th:text="${#dates.format(list.establishTime,'yyyy-MM-dd')}">Onions</td>-->
-												<td
-													th:text="${#dates.format(list.establishTime,'yyyy-MM-dd')}">Onions</td>
-												<td th:text="${list.founder}">Onions</td>
+												<td th:text="${list.context}">Onions</td>
+												<td th:text="${list.author}">Onions</td>
+												<td th:text="${list.source}">Onions</td>
 
-												<td><a
-													th:href="@{/admin/carouselPic/update(rId=${list.id})}">编辑</a>
-													<a
-															th:href="@{/admin/carouselPic/deletePic(rId=${list.id})}">删除</a>
+
+												<td><a th:href="@{/admin/carouselPic/horseUpate(rId=${list.msgId})}">编辑</a>
+													<a th:href="@{/admin/carouselPic/delete(rId=${list.msgId})}">删除</a>
 												</td>
 											</tr>
 										</tbody>
